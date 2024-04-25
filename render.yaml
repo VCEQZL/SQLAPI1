@@ -1,5 +1,5 @@
 services:
-  - name: sql_injection_app
+  - name: app
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: python sql_injection_app.py
