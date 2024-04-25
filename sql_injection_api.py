@@ -1,3 +1,4 @@
+import os
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import re
@@ -8,9 +9,14 @@ from waitress import serve
 app = Flask(__name__)
 CORS(app)  # Allow Cross-Origin Resource Sharing
 
+# Specify absolute paths to the model files
+MODEL_DIR = os.path.dirname(os.path.abspath(__file__))
+TFIDF_VECTORIZER_PATH = os.path.join(MODEL_DIR, "tfidf_vectorizer.pkl")
+TRAINED_MODEL_PATH = os.path.join(MODEL_DIR, "trained_model.pkl")
+
 # Load the trained model and TF-IDF vectorizer
-tfidf_vectorizer = joblib.load("tfidf_vectorizer.pkl")
-model = joblib.load("trained_model.pkl")
+tfidf_vectorizer = joblib.load(TFIDF_VECTORIZER_PATH)
+model = joblib.load(TRAINED_MODEL_PATH)
 
 @app.route('/', methods=['POST'])
 def detect_sql_injection_api():
